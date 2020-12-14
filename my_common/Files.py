@@ -46,16 +46,16 @@ class files():
         target_file_list = []
         for root, dirs, files in os.walk(path):
             for file in files:
-                file_path = os.path.join(root, file)
+                f = os.path.join(root, file)
                 # 啥类型都要
                 if type is '*':
-                    target_file_list.append(file_path)
+                    target_file_list.append(f)
                 else:
-                    kind = filetype.guess(file_path)
+                    kind = filetype.guess(f)
                     if kind is None:
                         continue
                     # print('File extension: %s' % kind.extension)
                     if kind.extension is type:
-                        target_file_list.append(file_path)
+                        target_file_list.append(f)
 
         return target_file_list
