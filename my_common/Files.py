@@ -40,22 +40,55 @@ class files():
             f.write("I am now studying in NJTECH.\n")
 
     # 遍历文件夹
-    def travel_folder(self, path, type):
+    def travel_folder_type_name(self, path, type):
         path = str(path)
         type = str(type)
         target_file_list = []
         for root, dirs, files in os.walk(path):
             for file in files:
-                f = os.path.join(root, file)
-                # 啥类型都要
-                if type is '*':
+                if type in file:
+                    # f = os.path.join(root, file)
+                    # # 啥类型都要
+                    # if type is '*':
+                    #     target_file_list.append(f)
+                    # else:
+                    #     kind = filetype.guess(f)
+                    #     if kind is None:
+                    #         continue
+                    #     # print('File extension: %s' % kind.extension)
+                    #     if kind.extension is type:
+                    target_file_list.append(file)
+
+        return target_file_list
+
+    # 遍历文件夹
+    def travel_folder_type(self, path, type):
+        path = str(path)
+        type = str(type)
+        target_file_list = []
+        for root, dirs, files in os.walk(path):
+            for file in files:
+                if type in file:
+                    f = os.path.join(root, file)
+                # # 啥类型都要
+                # if type is '*':
+                #     target_file_list.append(f)
+                # else:
+                #     kind = filetype.guess(f)
+                #     if kind is None:
+                #         continue
+                #     # print('File extension: %s' % kind.extension)
+                #     if kind.extension is type:
                     target_file_list.append(f)
-                else:
-                    kind = filetype.guess(f)
-                    if kind is None:
-                        continue
-                    # print('File extension: %s' % kind.extension)
-                    if kind.extension is type:
-                        target_file_list.append(f)
+
+        return target_file_list
+
+    def travel_folder(self, path):
+        path = str(path)
+        target_file_list = []
+        for root, dirs, files in os.walk(path):
+            for file in files:
+                f = os.path.join(root, file)
+                target_file_list.append(f)
 
         return target_file_list

@@ -13,9 +13,9 @@ import os
 import time
 
 # 抽帧，间隔时间，参照视频帧率
-fps_interval = 160
+fps_interval = 150
 
-input_folder = r'D:\Users\Desktop\video'
+input_folder = r'E:\PRIVATE\AVCHD\BDMV\STREAM'
 # input_file = r'D:\Users\Desktop\video\00007.MTS'
 output_folder = r'D:\work_source\CV_Project\datasets\a6000'
 
