@@ -54,15 +54,36 @@ show_map = {'ebike3_front': 'e3f',
             'ebike2_front': 'e2f',
             'ebike2_sunshade_other': "eso"}
 
-json_path = r"D:\Users\Desktop\第二批"
-image_home = r"D:\work_source\CV_Project\datasets\label_check\img\dahua_20201208"
-img_output = r"D:\Users\Desktop\img_abeled/"
+json_path = r"D:\work_source\CV_Project\datasets\label_check\label\5"
+image_home = r"D:\work_source\CV_Project\datasets\label_check\img\20201211"
+img_output = r"D:\work_source\CV_Project\datasets\label_check\img_labeled\5"
 
-rate = 0.05
+# read all original image
+img_dict = {}
+for root, dirs, files in os.walk(image_home):
+    for file in files:
+        f = os.path.join(root, file)
+        img_name = os.path.splitext(file)[0]
+        img_dict[img_name] = f
+
+
+# print(os.path.basename(img))
+# print(os.path.abspath(img))
+# print(os.path.dirname(img))
+# print()
+
+
+
+if not os.path.exists(img_output):
+    os.makedirs(img_output)
+
+rate = 0.1
 
 total = 0
 show_h = np.int32(720 * 1.3)
 show_w = np.int32(1280 * 1.3)
+# show_h = 1
+# show_w = 1
 
 json_list = []
 for root, dirs, files in os.walk(json_path):
@@ -81,32 +102,41 @@ for j in json_random_selected:
     load_dict1 = json.load(ftt1)
     j_name = os.path.basename(j)
 
-    image_name = j_name.replace("json", "jpg")
-    if not os.path.exists(os.path.join(image_home, image_name)):
-        image_name = j.replace("json", "png")
-    if not os.path.exists(os.path.join(image_home, image_name)):
-        print(image_name, "file not exist")
+    image_name = os.path.splitext(j_name)[0]
+    # image_name = os.path.join(image_home, image_name)
+    # if not os.path.exists(image_name):
+    #     image_name = j.replace("json", "png")
+    # if not os.path.exists(image_name):
+    #     # print(image_name, "file not exist")
+    #     continue
+    if not image_name in img_dict.keys():
         continue
+    img_abs = img_dict[image_name]
 
-    mat_org = cv2.imread(os.path.join(image_home, image_name))
+    mat_org = cv2.imread(img_abs)
     h, w, c = mat_org.shape
-    mat = cv2.resize(mat_org, (show_w, show_h))
+    # mat = cv2.resize(mat_org, (show_w, show_h))
+    mat = mat_org
     scale_h = show_h / h
     scale_w = show_w / w
+    scale_h = 1
+    scale_w = 1
     for idx, target in enumerate(load_dict1['shapes']):
-
         lname = target['label']
         ff = ''
         if 'head' in lname:
             ff = " ,"
-        lname = show_map[lname]
+        if lname in show_map:
+            lname = show_map[lname]
+        else:
+            print('label error:',lname)
         if target['shape_type'] == 'rectangle':
             points = np.asarray(target['points'])
             points[:, 0] = points[:, 0] * scale_w
             points[:, 1] = points[:, 1] * scale_h
             points = points.astype(np.int32)
-            cv2.rectangle(mat, tuple(points[0]), tuple(points[1]), (255, 0, 0), 1)
-            cv2.putText(mat, ff + lname, tuple(points[0]), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 1)
+            cv2.rectangle(mat, tuple(points[0]), tuple(points[1]), (255, 0, 0), 2)
+            cv2.putText(mat, ff + lname, tuple(points[0]), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
         else:
             points = np.asarray(target['points'])
             points[:, 0] = points[:, 0] * scale_w
@@ -119,8 +149,9 @@ for j in json_random_selected:
             # cv2.polylines(mat, p_sets,True, (222,33,4), 2)
             # cv.putText(img, text, org, fontFace,fontScale,color[, thickness[, lineType[, bottomLeftOrigin]]])
             cv2.putText(mat, lname, tuple(p_sets[0]), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
-    cv2.imwrite(img_output + image_name, mat)
-    # print(img_output + image_name)
+    out_file = os.path.join(img_output,os.path.basename(image_name+'.png'))
+    cv2.imwrite(out_file, mat)
+    print(out_file)
 
 ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 #
