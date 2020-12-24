@@ -53,23 +53,23 @@ def getRemoteFiles(remoteDir):
         print('getAllFilePath exception:', e)
 
 
-# json_home = '/APP/zmj/test_sftp/json'
-# json_files = getRemoteFiles(json_home)
-#
-# for file in json_files:
-#     remote_file = sftp_client.open(file,'r+')
-#     print(file)
-#     with open(os.path.join('D:/work_source/test_env/sftp/output', os.path.basename(file)), 'w') as wf:
-#         for l in remote_file:
-#             wf.write(l.strip('\n'))
-#             print(l.strip("\n"))
+json_home = '/APP/zmj/test_sftp/json'
+json_files = getRemoteFiles(json_home)
+
+for file in json_files:
+    remote_file = sftp_client.open(file,'r+')
+    print(file)
+    with open(os.path.join('D:/work_source/test_env/sftp/output', os.path.basename(file)), 'w') as wf:
+        for l in remote_file:
+            wf.write(l.strip('\n'))
+            print(l.strip("\n"))
 
 
 
-img_home = '/APP/zmj/test_sftp/img'
-img_files = getRemoteFiles(img_home)
-for img in img_files:
-    remote_file = sftp_client.open(img, 'r+')
-    print(img)
-    for s in remote_file:
-        print(s)
+# img_home = '/APP/zmj/test_sftp/img'
+# img_files = getRemoteFiles(img_home)
+# for img in img_files:
+#     remote_file = sftp_client.open(img, 'r+')
+#     print(img)
+#     for s in remote_file:
+#         print(s)

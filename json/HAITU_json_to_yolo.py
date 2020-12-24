@@ -13,6 +13,11 @@ import json
 import cv2
 from shutil import copyfile
 
+"""
+convert annotation files which are in json formation and from HAITU to yolo formation.
+"""
+
+
 # select_labels = ['ebike3_front',
 #             'ebike2_sunshade_front',
 #             'ebike2_sunshade_back',
@@ -103,11 +108,10 @@ def convert_json_to_yolo(j_dict, i_dict, output):
     for j in j_dict:
         json_f = j_dict[j]
 
-        # filter empty picture
         if j in i_dict.keys():
             img = i_dict[j]
             image = cv2.imread(img)
-            if image is None: continue
+            if image is None: continue # filter empty picture
 
             copyfile(img, os.path.join(output_img, os.path.basename(img)))
 
@@ -178,7 +182,6 @@ if __name__ == '__main__':
     print('time cost: %s' % str(datetime.datetime.now() - start_time).split('.')[0])
 
 #
-# # 浩轩code
 # def convert_to_yolo_format_1216():
 #     labels_dir = '/media/wanghl/bae62e0f-e516-416b-8c1b-8b066b8eb7a7/home/qiuhx/Workspace/gaotong/data/3_label'
 #     imgs_dir = labels_dir[:-6]
