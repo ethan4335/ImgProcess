@@ -54,9 +54,9 @@ show_map = {'ebike3_front': 'e3f',
             'ebike2_front': 'e2f',
             'ebike2_sunshade_other': "eso"}
 
-json_path = r"D:\work_source\CV_Project\datasets\label_check\label\5"
-image_home = r"D:\work_source\CV_Project\datasets\label_check\img\20201211"
-img_output = r"D:\work_source\CV_Project\datasets\label_check\img_labeled\5"
+json_path = r"D:\work_source\CV_Project\datasets\yolov5_test\json"
+image_home = r"D:\work_source\CV_Project\datasets\yolov5_test\images"
+img_output = r"D:\work_source\test_env\ImgProcess\abeled"
 
 # read all original image
 img_dict = {}
@@ -77,7 +77,7 @@ for root, dirs, files in os.walk(image_home):
 if not os.path.exists(img_output):
     os.makedirs(img_output)
 
-rate = 0.1
+rate = 1
 
 total = 0
 show_h = np.int32(720 * 1.3)
