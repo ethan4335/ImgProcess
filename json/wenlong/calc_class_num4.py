@@ -40,7 +40,10 @@ label_dict = {'ebike2_front': 0,
               'head_without_helmet': 0,
               'license_ebike': 0,
               'license_moto': 0,
-              'license_other': 0
+              'license_other': 0,
+              'moto_front': 0,
+              'moto_back': 0,
+              'moto_other': 0
               }
 
 label_home = os.getcwd()

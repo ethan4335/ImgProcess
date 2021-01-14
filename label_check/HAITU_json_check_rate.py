@@ -52,11 +52,15 @@ show_map = {'ebike3_front': 'e3f',
             'license_other': 'other',
             'ebike3_other': 'e3o',
             'ebike2_front': 'e2f',
-            'ebike2_sunshade_other': "eso"}
+            'ebike2_sunshade_other': "eso",
+            'moto_front':"mof",
+            'moto_back':"mob",
+            'moto_other':"moo"
+            }
 
-json_path = r"D:\work_source\CV_Project\datasets\yolov5_test\json"
-image_home = r"D:\work_source\CV_Project\datasets\yolov5_test\images"
-img_output = r"D:\work_source\test_env\ImgProcess\abeled"
+json_path = r"D:\work_source\CV_Project\datasets\label_check\8"
+image_home = r"D:\work_source\CV_Project\datasets\to_haitu_img\8_2189\20201217_multi_box"
+img_output = r"D:\work_source\CV_Project\datasets\img_labeled\8"
 
 # read all original image
 img_dict = {}
@@ -77,7 +81,7 @@ for root, dirs, files in os.walk(image_home):
 if not os.path.exists(img_output):
     os.makedirs(img_output)
 
-rate = 1
+rate = 0.05
 
 total = 0
 show_h = np.int32(720 * 1.3)

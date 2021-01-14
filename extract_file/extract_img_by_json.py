@@ -1,10 +1,7 @@
 import sys
 
-import numpy as np
-import json
+# import json
 import os
-import cv2
-import random
 import shutil
 
 # total_map = {'ebike2_back': 0,
@@ -57,16 +54,25 @@ show_map = {'ebike3_front': 'e3f',
             'ebike2_front': 'e2f',
             'ebike2_sunshade_other': "eso"}
 
-json_path = r"D:\work_source\CV_Project\datasets\label_check\label\6"
-image_home = r"E:\org_videos\20201217_selected\selected"
-img_output = r"D:\work_source\CV_Project\datasets\label_check\img_labeled\62"
+json_path = r"D:\work_source\CV_Project\datasets\labels_original\7_val"
+image_home = r"D:\work_source\CV_Project\datasets\to_haitu_img\7"
+img_output = r"D:\work_source\CV_Project\datasets\to_haitu_img\7_val"
 
 img_dict = {}
+
 for root, dirs, files in os.walk(image_home):
     for file in files:
         f = os.path.join(root, file)
         img_name = os.path.splitext(file)[0]
         img_dict[img_name] = f
+
+img_output_list = []
+if os.path.exists(img_output):
+    for root, dirs, files in os.walk(img_output):
+        for file in files:
+            f = os.path.join(root, file)
+            img_name = os.path.splitext(file)[0]
+            img_output_list.append(img_name)
 
 if not os.path.exists(img_output):
     os.makedirs(img_output)
@@ -82,7 +88,7 @@ print('total json file quantity:%s' % len(json_list))
 
 for j in json_list:
     ftt1 = open(j, 'r')
-    load_dict1 = json.load(ftt1)
+    # load_dict1 = json.load(ftt1)
     j_name = os.path.basename(j)
 
     image_name = os.path.splitext(j_name)[0]
@@ -97,7 +103,8 @@ for j in json_list:
 
     # adding exception handling
     try:
-        shutil.copy(img_dict[image_name], os.path.join(img_output,os.path.basename(img_dict[image_name])))
+        if image_name not in img_output_list:
+            shutil.copy(img_dict[image_name], os.path.join(img_output,os.path.basename(img_dict[image_name])))
     except IOError as e:
         print("Unable to copy file. %s" % e)
     except:
